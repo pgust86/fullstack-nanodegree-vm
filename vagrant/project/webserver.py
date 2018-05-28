@@ -1,7 +1,7 @@
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import cgi
 
-class webserverHandler(BaseHTTPRequestHandler):
+class webServerHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         try:
             if self.path.endswith("/hello"):
@@ -12,8 +12,8 @@ class webserverHandler(BaseHTTPRequestHandler):
                 output += "<html><body>"
                 output += "Hello!"
                 output += '''<form method = 'POST' enctype='multipart/form-data' action='/
-                    hello'><h2>What would you like me to say?</h2><input name='message'
-                    type='text' ><input type='submit' value = 'Submit'></form>'''
+                    hello'><h2>What would you like me to say?</h2><input name="message"
+                    type="text" ><input type="submit" value = "Submit"></form>'''
                 output += "</body></html>"
                 self.wfile.write(output)
                 print output
@@ -27,8 +27,8 @@ class webserverHandler(BaseHTTPRequestHandler):
                 output += "<html><body>"
                 output += "&#161Hola!"
                 output += '''<form method = 'POST' enctype='multipart/form-data' action = '/
-                    hello'><h2>What would you like me to say?</h2><input name='message'
-                    type='text' ><input type='submit' value = 'Submit'></form>'''
+                    hello'><h2>What would you like me to say?</h2><input name="message"
+                    type="text" ><input type="submit" value = "Submit"></form>'''
                 output += "</body></html>"
                 self.wfile.write(output)
                 print output
@@ -44,7 +44,7 @@ class webserverHandler(BaseHTTPRequestHandler):
             self.end_headers()
             ctype, pdict = cgi.parse_header(self.headers.getheader('content-type'))
             if ctype == 'multipart/form-data':
-                fields=chi.parse_multipart(self.rfile, pdict)
+                fields = cgi.parse_multipart(self.rfile, pdict)
                 messagecontent = fields.get('message')
             output = ""
             output += "<html><body>"
@@ -64,7 +64,7 @@ class webserverHandler(BaseHTTPRequestHandler):
 def main():
     try:
         port = 8080
-        server = HTTPServer(('',port), webserverHandler)
+        server = HTTPServer(('',port), webServerHandler)
         print "Web server running on port %s" % port
         server.serve_forever()
 
